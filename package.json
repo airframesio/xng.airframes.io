@@ -16,6 +16,6 @@
     "postcss": "8.5.15"
   },
   "devDependencies": {
-    "serve": "^14.2.6"
+    "serve": "^14.2.8"
   }
 }
