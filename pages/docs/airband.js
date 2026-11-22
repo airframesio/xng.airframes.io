@@ -127,6 +127,11 @@ xng listen --sdr driver=rtlsdr --mode airband --channels 120.5,121.8 \\
           <code>~/.config/xng/atc.json</code>, readable by you alone. <code>xng atc logout</code>{' '}
           forgets the sign-in. The published station position is rounded (500 m in the example below).
         </li>
+        <li>
+          Add <code>--atc-hide-username</code> (or <code>hide-username = true</code> in the station
+          file) so the network doesn&apos;t show your account&apos;s username next to this
+          feeder&apos;s feeds. You can also hide it for all your feeders in your airframes.io account.
+        </li>
       </ul>
       <Callout type="note">
         <p>
@@ -159,6 +164,7 @@ hold-ms = 2000
 [outputs.airband.atc]
 station-name = "SFO west ridge"
 location-precision-m = 500
+hide-username = true
 
 [[session]]
 sdr = "driver=rtlsdr,serial=00000001"
