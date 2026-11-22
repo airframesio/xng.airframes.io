@@ -22,8 +22,8 @@ export default function Airband() {
         lang="bash"
         code={`# Three channels from one RTL-SDR, with a scanner and the browser page
 xng listen --sdr driver=rtlsdr --mode airband -r 2400000 \\
-    --channels 120.5,121.8,135.65 \\
-    --labels "120.5=SFO Tower,121.8=SFO Ground,135.65=NorCal Approach" \\
+    --channels 120.5,120.9,121.8 \\
+    --labels "120.5=SFO Tower,120.9=SFO Ground West,121.8=SFO Ground" \\
     --scan --scan-priority 120.5 \\
     --record-dir ~/airband --http 0.0.0.0:8080
 # open http://localhost:8080/airband and press listen`}
