@@ -58,7 +58,7 @@ export default function Recipes() {
         </p>
       </Callout>
 
-      <h2>Airband: tower, ground and approach with a scanner, fed to the ATC network</h2>
+      <h2>Airband: tower and ground with a scanner, fed to the ATC network</h2>
       <CodeBlock lang="bash" code={`xng atc login   # once
 xng listen --sdr driver=rtlsdr --mode airband -r 2400000 \\
     --channels 120.5,120.9,121.8 \\
