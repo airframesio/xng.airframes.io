@@ -21,7 +21,7 @@ export default function Airband() {
       <CodeBlock
         lang="bash"
         code={`# Three channels from one RTL-SDR, with a scanner and the browser page
-xng listen --sdr driver=rtlsdr --mode airband -r 2400000 \\
+xng listen --sdr driver=rtlsdr --mode airband -r 2400000 -c 121.15 \\
     --channels 120.5,120.9,121.8 \\
     --labels "120.5=SFO Tower,120.9=SFO Ground West,121.8=SFO Ground" \\
     --scan --scan-priority 120.5 \\
@@ -29,7 +29,7 @@ xng listen --sdr driver=rtlsdr --mode airband -r 2400000 \\
 # open http://localhost:8080/airband and press listen`}
       />
       <p>
-        The center frequency is chosen to fit the channels when you leave out <code>-c</code>. One
+        Pick <code>-c</code> so every channel sits inside the capture and none lands right on the center (the SDR&apos;s DC spike). One
         RTL-SDR at 2.4 MS/s covers about 2 MHz of airband; channels can sit 8.33 kHz or 25 kHz apart.
       </p>
 
@@ -103,7 +103,7 @@ xng listen --sdr driver=rtlsdr --mode airband -r 2400000 \\
 xng atc login --email you@example.com    # or with a password
 xng atc status           # who this feeder is signed in as
 
-xng listen --sdr driver=rtlsdr --mode airband --channels 120.5,121.8 \\
+xng listen --sdr driver=rtlsdr --mode airband -r 2400000 -c 121.15 --channels 120.5,121.8 \\
     --receiver-pos 37.62,-122.38 --atc-feed`}
       />
       <ul>

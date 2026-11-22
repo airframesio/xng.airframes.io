@@ -60,7 +60,7 @@ export default function Recipes() {
 
       <h2>Airband: tower and ground with a scanner, fed to the ATC network</h2>
       <CodeBlock lang="bash" code={`xng atc login   # once
-xng listen --sdr driver=rtlsdr --mode airband -r 2400000 \\
+xng listen --sdr driver=rtlsdr --mode airband -r 2400000 -c 121.15 \\
     --channels 120.5,120.9,121.8 \\
     --labels "120.5=SFO Tower,120.9=SFO Ground West,121.8=SFO Ground" \\
     --scan --scan-priority 120.5 --record-dir ~/airband --record-format ogg \\
