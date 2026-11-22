@@ -59,7 +59,9 @@ export default function InputsOutputs() {
             <tr><td><code>--mqtt mqtt://…</code></td><td>JSON to <code>&lt;prefix&gt;/&lt;mode&gt;</code> on an MQTT broker</td></tr>
             <tr><td><code>--asf2-grpc</code> / <code>--asf2-quic</code></td><td>asf-2.0 multiplexed feeding over gRPC / QUIC</td></tr>
             <tr><td><code>--gsmtap [addr]</code></td><td>Iridium GSM frames to Wireshark via GSMTAP</td></tr>
-            <tr><td><code>--http 0.0.0.0:8080</code></td><td>Live web dashboard + data API + geo export</td></tr>
+            <tr><td><code>--http 0.0.0.0:8080</code></td><td>Live web dashboard + data API + geo export (plus the <code>/airband</code> listening page)</td></tr>
+            <tr><td><code>--record-dir</code> · <code>--icecast</code> · <code>--audio-udp</code></td><td>Airband audio: recordings (WAV/Opus), Icecast streams, PCM over UDP</td></tr>
+            <tr><td><code>--atc-feed</code></td><td>Airband audio to the Airframes ATC network (after <code>xng atc login</code>)</td></tr>
           </tbody>
         </table>
       </div>
@@ -87,6 +89,7 @@ export default function InputsOutputs() {
       <div className="deflist">
         <div className="deflist__row"><code>/data/aircraft.json</code><p>tar1090 / graphs1090 / VRS compatible — point those tools straight at it.</p></div>
         <div className="deflist__row"><code>/data/export.geojson · .gpx · .kml</code><p>RFC 7946 GeoJSON, GPX 1.1, and OGC KML 2.2 exports.</p></div>
+        <div className="deflist__row"><code>/airband</code><p>Airband channels, scanner controls, recent transmissions, and listening in the browser. See <Link href="/docs/airband">Airband voice &amp; ATC</Link>.</p></div>
         <div className="deflist__row"><code>/api/state</code><p>Cross-mode distress surface — ADS-B 7500/7600/7700, AIS SART/MOB/EPIRB, STD-C/DSC distress, SARSAT 406.</p></div>
       </div>
 

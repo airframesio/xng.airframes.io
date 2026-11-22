@@ -148,6 +148,10 @@ enabled = false            # decode HFDL locally, but do not feed it`}
           <code>feed</code> · <code>airframes-station-id</code>
           <p>Disable feeding for just this session, or override its station ID.</p>
         </div>
+        <div className="deflist__row">
+          <code>[session.airband]</code>
+          <p>For <code>mode = "airband"</code>: channel defaults, per-channel labels, ATC keys and overrides, and the mix stream. The audio outputs go in <code>[outputs.airband]</code>. See <Link href="/docs/airband">Airband voice &amp; ATC</Link>.</p>
+        </div>
       </div>
 
       <Callout type="warn">
