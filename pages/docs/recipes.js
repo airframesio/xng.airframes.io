@@ -58,6 +58,15 @@ export default function Recipes() {
         </p>
       </Callout>
 
+      <h2>Airband: tower and ground with a scanner, fed to the ATC network</h2>
+      <CodeBlock lang="bash" code={`xng atc login   # once
+xng listen --sdr driver=rtlsdr --mode airband -r 2400000 -c 121.15 \\
+    --channels 120.5,120.9,121.8 \\
+    --labels "120.5=SFO Tower,120.9=SFO Ground West,121.8=SFO Ground" \\
+    --scan --scan-priority 120.5 --record-dir ~/airband --record-format ogg \\
+    --http 0.0.0.0:8080 --receiver-pos 37.62,-122.38 --atc-feed`} />
+      <p>Open <code>http://localhost:8080/airband</code> to listen. More in <Link href="/docs/airband">Airband voice &amp; ATC</Link>.</p>
+
       <h2>Replay a recording — no hardware</h2>
       <CodeBlock lang="bash" code={`xng iq-info capture.cf32 -r 2000000 -c 131500000
 xng decode capture.cf32 -r 2400000 -c 131.500M --channels 131.550,131.425 --json`} />

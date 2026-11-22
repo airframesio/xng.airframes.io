@@ -22,6 +22,7 @@ export default function Cli() {
             <tr><td><code>survey</code></td><td>Soak-test one mode across all channels; report per-channel stats and advice.</td></tr>
             <tr><td><code>station</code></td><td>Run a whole station from a TOML config (many modes/SDRs in one process).</td></tr>
             <tr><td><code>status</code></td><td>Show a running station’s sessions and live decode status.</td></tr>
+            <tr><td><code>atc</code></td><td>Sign this feeder in to the Airframes ATC network (<code>login</code>, <code>logout</code>, <code>status</code>).</td></tr>
             <tr><td><code>devices</code></td><td>List available SDR devices (native Airspy + SoapySDR).</td></tr>
             <tr><td><code>iq-info</code></td><td>Inspect a recorded IQ file: duration, power, spectral peaks.</td></tr>
             <tr><td><code>ingest</code></td><td>Run the reference asf-2.0 ingest server (gRPC and/or QUIC).</td></tr>
@@ -56,6 +57,14 @@ export default function Cli() {
         <div className="deflist__row"><code>--aircraft-db &lt;csv&gt;</code><p>tar1090 / Mictronics database for registration and type tagging.</p></div>
         <div className="deflist__row"><code>--iridium-satmap</code><p>SGP4 satellite labeling for Iridium.</p></div>
       </div>
+
+      <h2>Airband flags</h2>
+      <p>
+        <code>--mode airband</code> adds squelch, scanner, recording, streaming and ATC-feed flags
+        (<code>--squelch</code>, <code>--labels</code>, <code>--scan</code>, <code>--record-dir</code>,{' '}
+        <code>--icecast</code>, <code>--atc-feed</code>, …), listed under &quot;Airband&quot; in{' '}
+        <code>xng listen --help</code> and explained in <Link href="/docs/airband">Airband voice &amp; ATC</Link>.
+      </p>
 
       <h2>What it looks like running</h2>
       <p><code>xng status</code> against a running station:</p>
