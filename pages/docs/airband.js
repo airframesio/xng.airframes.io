@@ -39,7 +39,7 @@ xng listen --sdr driver=rtlsdr --mode airband -r 2400000 -c 121.15 \\
         <div className="deflist__row"><code>AM and NFM</code><p><code>--modulation am</code> (airband) or <code>nfm</code> (marine, land mobile). AM is carrier-normalised so weak and strong stations play at the same loudness.</p></div>
         <div className="deflist__row"><code>Squelch</code><p><code>auto[:snr_db]</code> tracks each channel&apos;s noise floor (default 9 dB above it), <code>manual:&lt;dBFS&gt;</code> uses a fixed level, <code>off</code> streams continuously. Hang time, open delay, and a short pre-roll so the first syllable is kept.</p></div>
         <div className="deflist__row"><code>Clean-up</code><p>AFC for drifting carriers (<code>--afc</code>), CTCSS tone gating (<code>--ctcss</code>), a notch for a heterodyne (<code>--notch</code>), audio gain.</p></div>
-        <div className="deflist__row"><code>Transcripts</code><p>Speech-to-text for every transmission: Parakeet or Moonshine (sherpa-onnx) or Whisper locally, or a Whisper server. Text shows up in the console, JSON outputs, dashboard, recordings and the ATC feed. See <a href="#transcripts">Transcripts</a>.</p></div>
+        <div className="deflist__row"><code>Transcripts</code><p>Speech-to-text for every transmission: an ATC-tuned Parakeet, Moonshine (sherpa-onnx) or Whisper locally, or a Whisper server. Text shows up in the console, JSON outputs, dashboard, recordings and the ATC feed. See <a href="#transcripts">Transcripts</a>.</p></div>
         <div className="deflist__row"><code>Mix and scan</code><p><code>--mix</code> adds one stream with every channel summed. <code>--scan</code> adds a scanner stream that follows the active channel, with priority channels, a hold time for the reply, lockouts, and a pin, across every SDR in the station.</p></div>
       </div>
 
@@ -151,9 +151,10 @@ xng listen --sdr driver=rtlsdr --mode airband -r 2400000 -c 121.15 --channels 12
       </p>
       <CodeBlock
         lang="bash"
-        code={`# Parakeet through sherpa-onnx (xng built with --features sherpa); downloaded once
+        code={`# The ATC-tuned Parakeet model through sherpa-onnx (xng built with --features sherpa);
+# the default, downloaded once
 xng listen --sdr driver=rtlsdr --mode airband -r 2400000 -c 121.15 --channels 120.5,121.8 \\
-    --transcribe-model parakeet-110m --receiver-pos 37.62,-122.38 --atc-feed
+    --transcribe-model skycontrol-atc-110m --receiver-pos 37.62,-122.38 --atc-feed
 
 # Whisper through whisper.cpp (xng built with --features whisper)
 xng listen ... --transcribe-model base.en
@@ -164,14 +165,17 @@ XNG_WHISPER_API_KEY=... xng listen ... --whisper-url http://gpu-box:8000 --trans
       <p>Which engine to use:</p>
       <ul>
         <li>
-          <strong>sherpa-onnx</strong> (<code>--features sherpa</code>) runs Moonshine, NVIDIA
-          Parakeet and SenseVoice. They cost CPU in proportion to the audio, while Whisper pads every
-          transmission to 30 seconds, so a short call is much cheaper. <code>parakeet-110m</code> (the
-          default) matched Whisper base.en&apos;s accuracy on radio-quality ATC phrases at a quarter of
-          the CPU; <code>parakeet-tdt-0.6b-v2</code> made half the errors of Whisper base.en for the
-          same CPU; <code>moonshine-tiny</code> is the lightest, for a Raspberry Pi 3 or 4. Also{' '}
-          <code>moonshine-base</code>, <code>parakeet-tdt-0.6b-v3</code> (25 European languages) and{' '}
-          <code>sense-voice</code> (Chinese, English, Japanese, Korean, Cantonese). The numbers are in{' '}
+          <strong>sherpa-onnx</strong> (<code>--features sherpa</code>) runs NVIDIA Parakeet,
+          Moonshine and SenseVoice. They cost CPU in proportion to the audio, while Whisper pads every
+          transmission to 30 seconds, so a short call is much cheaper. The default,{' '}
+          <code>skycontrol-atc-110m</code>, is Parakeet-110m fine-tuned on ATC speech. On real
+          controller and pilot audio it made a quarter to a third of the errors of stock Whisper and
+          Parakeet, at about 1/20 of a CPU core. It was trained on European audio and now and then
+          guesses a European word on a US callsign. Also <code>parakeet-110m</code>,{' '}
+          <code>parakeet-tdt-0.6b-v2</code>, <code>moonshine-tiny</code> (the lightest, for a
+          Raspberry Pi 3 or 4), <code>moonshine-base</code>, <code>parakeet-tdt-0.6b-v3</code> (25
+          European languages) and <code>sense-voice</code> (Chinese, English, Japanese, Korean,
+          Cantonese). The numbers are in{' '}
           <a href="https://github.com/airframesio/xng/blob/master/docs/notes/AIRBAND.md#choosing-a-model">
             AIRBAND.md
           </a>
@@ -229,7 +233,7 @@ location-precision-m = 500
 hide-username = true
 
 [outputs.airband.transcribe]
-model = "parakeet-110m"       # or "base.en", or url = "http://gpu-box:8000"
+model = "skycontrol-atc-110m" # or "base.en", or url = "http://gpu-box:8000"
 language = "en"
 
 [[session]]
