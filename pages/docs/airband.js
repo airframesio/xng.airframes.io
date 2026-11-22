@@ -39,6 +39,7 @@ xng listen --sdr driver=rtlsdr --mode airband -r 2400000 -c 121.15 \\
         <div className="deflist__row"><code>AM and NFM</code><p><code>--modulation am</code> (airband) or <code>nfm</code> (marine, land mobile). AM is carrier-normalised so weak and strong stations play at the same loudness.</p></div>
         <div className="deflist__row"><code>Squelch</code><p><code>auto[:snr_db]</code> tracks each channel&apos;s noise floor (default 9 dB above it), <code>manual:&lt;dBFS&gt;</code> uses a fixed level, <code>off</code> streams continuously. Hang time, open delay, and a short pre-roll so the first syllable is kept.</p></div>
         <div className="deflist__row"><code>Clean-up</code><p>AFC for drifting carriers (<code>--afc</code>), CTCSS tone gating (<code>--ctcss</code>), a notch for a heterodyne (<code>--notch</code>), audio gain.</p></div>
+        <div className="deflist__row"><code>Transcripts</code><p>Whisper speech-to-text for every transmission, locally or through a Whisper server. Text shows up in the console, JSON outputs, dashboard, recordings and the ATC feed. See <a href="#transcripts">Transcripts</a>.</p></div>
         <div className="deflist__row"><code>Mix and scan</code><p><code>--mix</code> adds one stream with every channel summed. <code>--scan</code> adds a scanner stream that follows the active channel, with priority channels, a hold time for the reply, lockouts, and a pin, across every SDR in the station.</p></div>
       </div>
 
@@ -140,6 +141,49 @@ xng listen --sdr driver=rtlsdr --mode airband -r 2400000 -c 121.15 --channels 12
         </p>
       </Callout>
 
+      <h2 id="transcripts">Transcripts with Whisper</h2>
+      <p>
+        Add <code>--transcribe</code> and xng sends each finished transmission to Whisper. The text
+        goes to the console and JSON outputs (an airband message with <code>kind</code>{' '}
+        <code>transcript</code>), the dashboard&apos;s history, the recording&apos;s sidecar, and the
+        Airframes ATC feed, where listeners see it next to the audio.
+      </p>
+      <CodeBlock
+        lang="bash"
+        code={`# Local model (xng built with --features whisper); base.en is downloaded once
+xng listen --sdr driver=rtlsdr --mode airband -r 2400000 -c 121.15 --channels 120.5,121.8 \\
+    --whisper-model base.en --receiver-pos 37.62,-122.38 --atc-feed
+
+# Or a Whisper server elsewhere (OpenAI-compatible, faster-whisper, whisper.cpp server)
+XNG_WHISPER_API_KEY=... xng listen ... --whisper-url http://gpu-box:8000`}
+      />
+      <ul>
+        <li>
+          <strong>Local:</strong> <code>--whisper-model</code> takes a ggml file or a name
+          (<code>tiny.en</code>, <code>base.en</code>, <code>small.en</code>, <code>large-v3-turbo</code>),
+          fetched once into <code>~/.cache/xng/whisper</code>. As a rough guide: <code>tiny.en</code> or{' '}
+          <code>base.en</code> on a Raspberry Pi, <code>small.en</code> on a desktop CPU, larger models
+          with a GPU build (<code>--features whisper-cuda</code>, <code>whisper-metal</code> or{' '}
+          <code>whisper-vulkan</code>). Release binaries don&apos;t include local Whisper; build with the
+          feature or use a server.
+        </li>
+        <li>
+          <strong>Server:</strong> <code>--whisper-url http://host:port</code> posts WAV audio to{' '}
+          <code>/v1/audio/transcriptions</code>; give a full URL for another path, such as whisper.cpp&apos;s{' '}
+          <code>/inference</code>.
+        </li>
+        <li>
+          Whisper is primed with the channel label and ATC phrasing (<code>--whisper-prompt</code> to
+          change it). Its usual inventions on static, such as &ldquo;Thank you.&rdquo;, are thrown
+          away.
+        </li>
+        <li>
+          <code>--whisper-streams 120.5</code> limits it to some channels. If Whisper can&apos;t keep
+          up, the oldest waiting transmissions are skipped so transcripts stay close to live, and the
+          log suggests a smaller model.
+        </li>
+      </ul>
+
       <h2>In a station file</h2>
       <p>
         Airband sessions take a <code>[session.airband]</code> block (defaults, per-channel tables,
@@ -165,6 +209,10 @@ hold-ms = 2000
 station-name = "SFO west ridge"
 location-precision-m = 500
 hide-username = true
+
+[outputs.airband.transcribe]
+model = "base.en"             # or url = "http://gpu-box:8000"
+language = "en"
 
 [[session]]
 sdr = "driver=rtlsdr,serial=00000001"
