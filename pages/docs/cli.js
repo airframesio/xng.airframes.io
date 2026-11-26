@@ -54,8 +54,8 @@ export default function Cli() {
       <div className="deflist">
         <div className="deflist__row"><code>--filter-labels H1,Q0</code> · <code>--exclude-labels SQ</code><p>Keep or drop ACARS messages by label.</p></div>
         <div className="deflist__row"><code>--gs-file stations.json</code><p>VDL2 ground-station name lookup (hex AVLC address → name).</p></div>
-        <div className="deflist__row"><code>--aircraft-db &lt;csv&gt;</code><p>tar1090 / Mictronics database for registration and type tagging.</p></div>
-        <div className="deflist__row"><code>--iridium-satmap</code><p>SGP4 satellite labeling for Iridium.</p></div>
+        <div className="deflist__row"><code>--aircraft-db &lt;csv&gt;</code><p>tar1090 / Mictronics database for registration and type tagging. Also maps an ACARS registration back to its ICAO address, so ACARS positions can go out on SBS.</p></div>
+        <div className="deflist__row"><code>--iridium-satmap</code><p>SGP4 satellite labeling for Iridium (fetches Iridium-NEXT TLEs from Celestrak, or give a TLE file). Also turns on receiver location from ring-alert Doppler; set <code>XNG_IRIDIUM_LOCATE=off</code> to skip it.</p></div>
       </div>
 
       <h2>Airband flags</h2>

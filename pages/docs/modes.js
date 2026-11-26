@@ -42,7 +42,7 @@ export default function Modes() {
             <tr><td><code>hfdl</code></td><td>HFDL (ARINC 635)</td><td>2.8–22 MHz</td><td>Squitters, logons, mapped positions, OTA system-table persistence</td><td>● live</td></tr>
             <tr><td><code>aero</code></td><td>Inmarsat Aero L</td><td>1545–1547 MHz</td><td>P-channel 600/1200 bps + 10.5 kbps OQPSK; ACARS/ADS-C/CPDLC; C-channel voice</td><td>● live</td></tr>
             <tr><td><code>std-c</code></td><td>Inmarsat STD-C / EGC</td><td>1537–1542 MHz</td><td>NCS TDM, EGC SafetyNET/FleetNET, geographic-area decode to coordinates</td><td>● live</td></tr>
-            <tr><td><code>iridium</code></td><td>Iridium</td><td>1616–1626.5 MHz</td><td>Ring alerts with sat positions, IBC/ITL, ACARS over SBD, pager, voice classification, IP frames</td><td>● live</td></tr>
+            <tr><td><code>iridium</code></td><td>Iridium</td><td>1616–1626.5 MHz</td><td>Ring alerts with sat positions, IBC/ITL, ACARS over SBD, pager, voice classification, IP frames; receiver location from ring-alert Doppler</td><td>● live</td></tr>
             <tr><td><code>ais</code></td><td>AIS (ITU-R M.1371)</td><td>161.975 / 162.025 MHz</td><td>NMEA AIVDM + field decode types 1–27, Inland-AIS, SART/MOB/EPIRB distress</td><td>● live</td></tr>
             <tr><td><code>adsb</code></td><td>Mode S / ADS-B</td><td>1090 MHz</td><td>CPR positions, Comm-B, ACAS RA, TIS-B/ADS-R; SBS + Beast out; native 2.4 MS/s</td><td>● live</td></tr>
           </tbody>

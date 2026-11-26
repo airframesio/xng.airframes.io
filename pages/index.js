@@ -27,7 +27,7 @@ const MODES = [
   { tag: 'HFDL', status: 'live', band: '2.8–22 MHz · HF', title: 'HFDL', desc: 'ARINC 635 squitters, logons, and mapped aircraft positions with over-the-air system-table persistence.' },
   { tag: 'AERO', status: 'live', band: '1545–1547 MHz · L-band', title: 'Inmarsat Aero', desc: 'JAERO-class P-channel 600/1200 bps and 10.5 kbps OQPSK — ACARS, ADS-C, CPDLC, control SUs over satellite.' },
   { tag: 'STD-C', status: 'live', band: '1537–1542 MHz · L-band', title: 'Inmarsat STD-C / EGC', desc: 'NCS TDM frames and EGC SafetyNET/FleetNET — maritime safety text with geographic-area decode.' },
-  { tag: 'IRIDIUM', status: 'live', band: '1616–1626.5 MHz · DQPSK', title: 'Iridium', desc: 'Ring alerts with live sat positions, IBC/ITL, ACARS over SBD, pager, voice classification. Out-decodes gr-iridium.' },
+  { tag: 'IRIDIUM', status: 'live', band: '1616–1626.5 MHz · DQPSK', title: 'Iridium', desc: 'Ring alerts with live sat positions, IBC/ITL, ACARS over SBD, pager, voice classification. Locates your receiver from ring-alert Doppler. Out-decodes gr-iridium.' },
   { tag: 'AIS', status: 'live', band: '161.975 / 162.025 MHz', title: 'AIS', desc: 'NMEA AIVDM plus field decode for types 1–27, Inland-AIS, SART/MOB/EPIRB distress, weak-signal coherent demod.' },
   { tag: 'ADS-B', status: 'live', band: '1090 MHz · Mode S', title: 'Mode S / ADS-B', desc: 'CPR positions, Comm-B registers, ACAS RA, TIS-B/ADS-R. Beast + SBS out to tar1090, Airplanes.Live, or Plane.Watch — native 2.4 MS/s on a plain RTL-SDR.' },
   { tag: 'UAT', status: 'live', band: '978 MHz', title: 'UAT 978', desc: 'ADS-B downlink and FIS-B weather uplink with Reed-Solomon FEC. Validated live off-air.' },
@@ -46,7 +46,7 @@ const FEATURES = [
 ];
 
 const STEPS = [
-  ['Install', 'Grab a prebuilt binary, the .deb, or the Docker image. No Rust toolchain required to run it.', 'sudo apt install ./xng_0.21.0_arm64.deb'],
+  ['Install', 'Grab a prebuilt binary, the .deb, or the Docker image. No Rust toolchain required to run it.', 'sudo apt install ./xng-0.23.3-arm64.deb'],
   ['See what is out there', 'List your radios, then let the scanner sweep the bands and tell you what is receivable.', 'xng scan --sdr driver=rtlsdr --modes acars,vdl2,ais'],
   ['Watch it live', 'Open the interactive TUI — message list, detail pane, spectrum, and waterfall, zero config.', 'xng tui --sdr driver=rtlsdr --mode acars'],
   ['Feed Airframes', 'Point a decode session at the network with your station ID and you are contributing.', 'xng listen --feed-airframes --station-id XX-KSEA-1'],
@@ -101,7 +101,7 @@ export default function Home() {
           <div className="hero__grid container">
             <div className="hero__copy" data-reveal>
               <p className="hero__chip mono">
-                <span className="dot dot--live" /> Open-source · Airframes · v0.21
+                <span className="dot dot--live" /> Open-source · Airframes · v0.23
               </p>
               <h1 className="hero__title">
                 One decoder for the <em>whole</em> radio stack.
@@ -339,7 +339,7 @@ export default function Home() {
                 lang="bash"
                 title="three ways to get it"
                 code={`# Debian / Ubuntu / Raspberry Pi
-sudo apt install ./xng_0.21.0_arm64.deb
+sudo apt install ./xng-0.23.3-arm64.deb
 
 # Docker (multi-arch)
 docker run --rm ghcr.io/airframesio/xng:latest --version
