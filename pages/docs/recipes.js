@@ -37,6 +37,26 @@ export default function Recipes() {
       <CodeBlock lang="bash" code={`xng listen --sdr driver=airspy --mode iridium -r 10000000 -c 1622.000M \\
     --channels 1622.000 --decode-threads 8`} />
 
+      <h2>Find your receiver from Iridium ring alerts</h2>
+      <p>
+        No GPS? With <code>--iridium-satmap</code>, xng fits your location from the Doppler shift of
+        ring alerts against SGP4 satellite positions. The first fix usually lands within 30 minutes
+        and is marked settled once it uses two or more satellites and two fits in a row agree within
+        20 km. It shows on the dashboard map and goes out as a <code>receiver-position</code> message.
+      </p>
+      <CodeBlock lang="bash" code={`xng listen --sdr driver=airspy --mode iridium -r 10000000 -c 1622.000M \\
+    --channels 1622.000 --iridium-satmap --http 0.0.0.0:8080`} />
+
+      <h2>ACARS positions on SBS</h2>
+      <p>
+        ADS-C reports and free-text position reports over VDL2, HFDL, Aero or Iridium go out on the
+        SBS stream when the aircraft's ICAO address is known: from the ADS-C airframe ID, or by
+        looking the registration up in <code>--aircraft-db</code>. They stay off Beast, which is for
+        Mode S only.
+      </p>
+      <CodeBlock lang="bash" code={`xng listen --sdr driver=airspyhf --mode hfdl -r 768000 -c 10060.000k \\
+    --channels 10027k,10060k,10063k,10081k --aircraft-db aircraft.csv --sbs 0.0.0.0:30003`} />
+
       <h2>AIS, both channels from one capture</h2>
       <CodeBlock lang="bash" code={`xng listen --sdr driver=rtlsdr --mode ais -r 2400000 -c 162.000M \\
     --channels 161.975,162.025 --nmea-tcp 0.0.0.0:10110`} />

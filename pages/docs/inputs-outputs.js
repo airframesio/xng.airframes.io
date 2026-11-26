@@ -53,7 +53,7 @@ export default function InputsOutputs() {
             <tr><td><code>--udp host:5550</code></td><td>acarsdec-compatible JSON datagrams (repeatable)</td></tr>
             <tr><td><code>--feed-airframes --station-id &lt;id&gt;</code></td><td>Feed to <code>feed.airframes.io</code></td></tr>
             <tr><td><code>--metrics 0.0.0.0:9090</code></td><td>Prometheus metrics</td></tr>
-            <tr><td><code>--sbs 0.0.0.0:30003</code></td><td>SBS / BaseStation TCP (Mode S + UAT/HFDL positions)</td></tr>
+            <tr><td><code>--sbs 0.0.0.0:30003</code></td><td>SBS / BaseStation TCP (Mode S + UAT/HFDL positions, plus ACARS ADS-C and free-text positions from any carrier when the ICAO address is known)</td></tr>
             <tr><td><code>--beast 0.0.0.0:30005</code></td><td>Beast binary TCP (carries the 12 MHz MLAT clock)</td></tr>
             <tr><td><code>--nmea-tcp</code> / <code>--nmea-udp</code></td><td>NMEA AIVDM server / push (AIS)</td></tr>
             <tr><td><code>--mqtt mqtt://…</code></td><td>JSON to <code>&lt;prefix&gt;/&lt;mode&gt;</code> on an MQTT broker</td></tr>
