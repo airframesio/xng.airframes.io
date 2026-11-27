@@ -67,7 +67,7 @@ export default function Recipes() {
     --channels 906.875 --http 0.0.0.0:8080
 
 xng listen --sdr driver=rtlsdr --mode meshcore -r 1000000 -c 910.525M \\
-    --channels 910.525`} />
+    --channels 910.525 --http 0.0.0.0:8080`} />
 
       <h2>AIS, both channels from one capture</h2>
       <CodeBlock lang="bash" code={`xng listen --sdr driver=rtlsdr --mode ais -r 2400000 -c 162.000M \\
