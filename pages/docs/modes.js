@@ -78,6 +78,7 @@ export default function Modes() {
             <tr><td><code>atcs</code></td><td>ATCS (rail)</td><td>896 / 900 MHz</td><td>HDLC/LAPB + AAR Spec-200 header</td><td>◐ growing</td></tr>
             <tr><td><code>eot</code></td><td>EOT/HOT (rail telemetry)</td><td>457.94 / 452.94 MHz</td><td>Manchester-FSK + AAR S-9152</td><td>◐ growing</td></tr>
             <tr><td><code>vdes</code></td><td>VDES ASM</td><td>161.95 / 162.00 MHz</td><td>GMSK 9600 + ASM transport + spec payloads</td><td>◐ growing</td></tr>
+            <tr><td><code>meshtastic</code> · <code>meshcore</code></td><td>Meshtastic / MeshCore (LoRa mesh)</td><td>863–870 / 902–928 MHz</td><td>Native LoRa SF7–12; Meshtastic text, position, node info, telemetry on default keys; MeshCore signed adverts and Public channel text</td><td>◐ growing</td></tr>
             <tr><td><code>airband</code></td><td>Airband voice (AM / NFM)</td><td>118–137 MHz, any AM/NFM voice</td><td>Many voice channels per capture, squelch, scanner and mix streams, recordings, browser listening, Icecast, ATC network feed — see <Link href="/docs/airband">Airband voice &amp; ATC</Link></td><td>◐ growing</td></tr>
           </tbody>
         </table>

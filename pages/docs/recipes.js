@@ -57,6 +57,18 @@ export default function Recipes() {
       <CodeBlock lang="bash" code={`xng listen --sdr driver=airspyhf --mode hfdl -r 768000 -c 10060.000k \\
     --channels 10027k,10060k,10063k,10081k --aircraft-db aircraft.csv --sbs 0.0.0.0:30003`} />
 
+      <h2>Meshtastic and MeshCore nodes on a map</h2>
+      <p>
+        Meshtastic LongFast in the US sits at 906.875 MHz, MeshCore's US settings at 910.525 MHz.
+        Open the dashboard's Mesh tab for the node list (name, hardware, battery, SNR, hops, last
+        text) and the Mesh nodes map layer. Mesh traffic is not fed to Airframes.
+      </p>
+      <CodeBlock lang="bash" code={`xng listen --sdr driver=rtlsdr --mode meshtastic -r 1000000 -c 906.875M \\
+    --channels 906.875 --http 0.0.0.0:8080
+
+xng listen --sdr driver=rtlsdr --mode meshcore -r 1000000 -c 910.525M \\
+    --channels 910.525`} />
+
       <h2>AIS, both channels from one capture</h2>
       <CodeBlock lang="bash" code={`xng listen --sdr driver=rtlsdr --mode ais -r 2400000 -c 162.000M \\
     --channels 161.975,162.025 --nmea-tcp 0.0.0.0:10110`} />

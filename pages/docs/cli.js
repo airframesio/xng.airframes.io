@@ -58,6 +58,14 @@ export default function Cli() {
         <div className="deflist__row"><code>--iridium-satmap</code><p>SGP4 satellite labeling for Iridium (fetches Iridium-NEXT TLEs from Celestrak, or give a TLE file). Also turns on receiver location from ring-alert Doppler; set <code>XNG_IRIDIUM_LOCATE=off</code> to skip it.</p></div>
       </div>
 
+      <h2>LoRa mesh flags</h2>
+      <div className="deflist">
+        <div className="deflist__row"><code>--lora-preset LongFast</code><p>Meshtastic preset (<code>LongFast</code>, <code>MediumFast</code>, <code>ShortTurbo</code>, …) or <code>meshcore-us</code>, <code>meshcore-eu</code>, <code>meshcore-anz</code>.</p></div>
+        <div className="deflist__row"><code>--lora-sf 7,8</code> · <code>--lora-bw 62.5</code><p>Spreading factor(s) to listen for and bandwidth in kHz, to override the preset. Each spreading factor adds a demodulator.</p></div>
+        <div className="deflist__row"><code>--meshtastic-key NAME=BASE64</code><p>Decrypt another Meshtastic channel (repeatable). Only the public default key is built in.</p></div>
+        <div className="deflist__row"><code>--meshcore-channel &apos;#name&apos;</code> · <code>NAME=BASE64</code><p>Decrypt another MeshCore group channel (repeatable). The Public channel is built in.</p></div>
+      </div>
+
       <h2>Airband flags</h2>
       <p>
         <code>--mode airband</code> adds squelch, scanner, recording, streaming and ATC-feed flags

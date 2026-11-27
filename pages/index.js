@@ -15,9 +15,9 @@ const SITE_URL = 'https://xng.airframes.io';
 const SOCIAL_IMAGE = `${SITE_URL}/xng-social.png`;
 
 const STATS = [
-  ['21', 'Signal modes from one binary'],
+  ['23', 'Signal modes from one binary'],
   ['1', 'SDR can watch many channels'],
-  ['25', 'Rust crates, shared decode core'],
+  ['26', 'Rust crates, shared decode core'],
   ['MIT', 'Or Apache-2.0 — permissive'],
 ];
 
@@ -33,6 +33,7 @@ const MODES = [
   { tag: 'UAT', status: 'live', band: '978 MHz', title: 'UAT 978', desc: 'ADS-B downlink and FIS-B weather uplink with Reed-Solomon FEC. Validated live off-air.' },
   { tag: 'SONDE', status: 'live', band: '~400–406 MHz', title: 'Radiosondes', desc: 'Vaisala RS41 de-whitening, RS-FEC, and STATUS/PTU/GPS — track weather balloons as they climb.' },
   { tag: 'NAVTEX', status: 'live', band: '518 / 490 kHz', title: 'NAVTEX', desc: 'CCIR 476 / SITOR-B with 4-of-7 and FEC-B framing — maritime safety broadcasts, validated on real USCG traffic.' },
+  { tag: 'MESH', status: 'beta', band: '863–928 MHz · LoRa', title: 'Meshtastic & MeshCore', desc: 'Native LoRa receiver for both mesh networks: text, positions, node info and telemetry on the default channels, signed MeshCore adverts, and a Mesh nodes map layer.' },
   { tag: '+10', status: 'beta', band: 'paging · rail · beacons', title: 'FLEX, POCSAG, APRS, DSC, SARSAT, EOT, ATCS, ADS-L, VDES…', desc: 'Ten more decode cores wired to --mode, spec-anchored and growing toward off-air validation.' },
 ];
 
@@ -46,7 +47,7 @@ const FEATURES = [
 ];
 
 const STEPS = [
-  ['Install', 'Grab a prebuilt binary, the .deb, or the Docker image. No Rust toolchain required to run it.', 'sudo apt install ./xng-0.23.3-arm64.deb'],
+  ['Install', 'Grab a prebuilt binary, the .deb, or the Docker image. No Rust toolchain required to run it.', 'sudo apt install ./xng-0.24.0-arm64.deb'],
   ['See what is out there', 'List your radios, then let the scanner sweep the bands and tell you what is receivable.', 'xng scan --sdr driver=rtlsdr --modes acars,vdl2,ais'],
   ['Watch it live', 'Open the interactive TUI — message list, detail pane, spectrum, and waterfall, zero config.', 'xng tui --sdr driver=rtlsdr --mode acars'],
   ['Feed Airframes', 'Point a decode session at the network with your station ID and you are contributing.', 'xng listen --feed-airframes --station-id XX-KSEA-1'],
@@ -101,7 +102,7 @@ export default function Home() {
           <div className="hero__grid container">
             <div className="hero__copy" data-reveal>
               <p className="hero__chip mono">
-                <span className="dot dot--live" /> Open-source · Airframes · v0.23
+                <span className="dot dot--live" /> Open-source · Airframes · v0.24
               </p>
               <h1 className="hero__title">
                 One decoder for the <em>whole</em> radio stack.
@@ -253,7 +254,7 @@ export default function Home() {
               <p className="section__ch mono">Quickstart</p>
               <h2 className="section__title">From zero to decoded in <em>minutes</em>.</h2>
               <p className="section__lede">
-                It looks intimidating — 21 modes, a dozen subcommands. It is not. Plug in an
+                It looks intimidating — 23 modes, a dozen subcommands. It is not. Plug in an
                 RTL-SDR, let the scanner find traffic, and watch it stream. You can try the
                 whole pipeline on a recorded IQ file with no hardware at all.
               </p>
@@ -339,7 +340,7 @@ export default function Home() {
                 lang="bash"
                 title="three ways to get it"
                 code={`# Debian / Ubuntu / Raspberry Pi
-sudo apt install ./xng-0.23.3-arm64.deb
+sudo apt install ./xng-0.24.0-arm64.deb
 
 # Docker (multi-arch)
 docker run --rm ghcr.io/airframesio/xng:latest --version

@@ -33,7 +33,7 @@ export default function Install() {
       <CodeBlock
         lang="bash"
         code={`# download the .deb for your architecture from the releases page, then:
-sudo apt install ./xng-0.23.3-arm64.deb
+sudo apt install ./xng-0.24.0-arm64.deb
 
 xng --version`}
       />
@@ -41,7 +41,7 @@ xng --version`}
       <h3>Linux / macOS tarball</h3>
       <CodeBlock
         lang="bash"
-        code={`tar xzf xng-v0.23.3-x86_64-unknown-linux-gnu.tar.gz
+        code={`tar xzf xng-v0.24.0-x86_64-unknown-linux-gnu.tar.gz
 sudo cp xng /usr/local/bin/
 xng --version`}
       />
