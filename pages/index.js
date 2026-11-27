@@ -47,7 +47,7 @@ const FEATURES = [
 ];
 
 const STEPS = [
-  ['Install', 'Grab a prebuilt binary, the .deb, or the Docker image. No Rust toolchain required to run it.', 'sudo apt install ./xng-0.24.0-arm64.deb'],
+  ['Install', 'Grab a prebuilt binary, the .deb, or the Docker image. No Rust toolchain required to run it.', 'sudo apt install ./xng-0.25.0-arm64.deb'],
   ['See what is out there', 'List your radios, then let the scanner sweep the bands and tell you what is receivable.', 'xng scan --sdr driver=rtlsdr --modes acars,vdl2,ais'],
   ['Watch it live', 'Open the interactive TUI — message list, detail pane, spectrum, and waterfall, zero config.', 'xng tui --sdr driver=rtlsdr --mode acars'],
   ['Feed Airframes', 'Point a decode session at the network with your station ID and you are contributing.', 'xng listen --feed-airframes --station-id XX-KSEA-1'],
@@ -340,7 +340,7 @@ export default function Home() {
                 lang="bash"
                 title="three ways to get it"
                 code={`# Debian / Ubuntu / Raspberry Pi
-sudo apt install ./xng-0.24.0-arm64.deb
+sudo apt install ./xng-0.25.0-arm64.deb
 
 # Docker (multi-arch)
 docker run --rm ghcr.io/airframesio/xng:latest --version
