@@ -32,7 +32,7 @@ export default function AtcQuickstart() {
       </p>
       <CodeBlock
         lang="bash"
-        code={`sudo apt install ./xng-0.28.0-arm64.deb   # 64-bit Pi OS; pick the amd64 or armhf .deb to match your machine
+        code={`sudo apt install ./xng-0.29.0-arm64.deb   # 64-bit Pi OS; pick the amd64 or armhf .deb to match your machine
 xng devices                                # every SDR should be listed`}
       />
       <Callout type="warn">

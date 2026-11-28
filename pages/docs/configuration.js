@@ -133,8 +133,10 @@ enabled = false            # decode HFDL locally, but do not feed it`}
         When xng connects, the gateway lists the modes it takes. xng then sends every listed
         mode, including modes with no per-port ingest such as STD-C, so new modes start flowing
         as Airframes adds them, with no xng update. Until the gateway accepts a feed, and
-        whenever the connection is down, messages go to the per-port ingests as before, so
-        turning it on loses nothing. <code>xng airframes ingests</code> shows the list.
+        whenever the connection is down, modes that have a per-port ingest send there as before,
+        so turning it on loses nothing for them. Modes that only the gateway takes, such as
+        STD-C, are not queued: their messages are dropped until the gateway takes them again
+        (xng counts them in its log). <code>xng airframes ingests</code> shows the list.
       </p>
       <CodeBlock
         lang="toml"
