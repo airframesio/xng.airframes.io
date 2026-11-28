@@ -116,7 +116,7 @@ xng listen --sdr driver=rtlsdr --mode airband -r 2400000 -c 121.15 --channels 12
           channel label settles it (<code>SJC Ground</code> picks the San Jose ground entry); if
           nothing does, the log lists the candidates and that channel is not fed. Fix one by hand
           with <code>--atc-frequency 120.5=airport:KSFO:TWR:120500</code>, or check first with{' '}
-          <code>xng atc match --lat 37.62 --lon -122.38 120.5 121.8</code>.
+          <code>xng atc match --lat 37.62 --lon -122.38 120.5 "121.8=SFO Ground"</code>.
         </li>
         <li>
           Audio is squelch-gated Opus (16 kHz, 24 kbit/s by default, <code>--atc-bitrate</code>), so
