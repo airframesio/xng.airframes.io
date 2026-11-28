@@ -123,7 +123,7 @@ xng listen --sdr driver=rtlsdr --mode airband -r 2400000 -c 121.15 --channels 12
           catalog what is within 30 nm of <code>--receiver-pos</code> (
           <code>--atc-nearby-radius-nm</code>), keeps tower, approach, departure, ground, delivery,
           center and other voice channels (never ATIS, AWOS or VOLMET, which talk all day), and
-          tunes the slice of the band (75% of the sample rate, so 1.8 MHz at{' '}
+          tunes the slice of the band (about 75% of the sample rate, so 1.75 MHz at{' '}
           <code>-r 2400000</code>) that holds the most useful ones, up to 8 (
           <code>--atc-nearby-max</code>). Closer and busier services count for more. Each channel
           gets its catalog name as its label, and the picks are printed at start.{' '}

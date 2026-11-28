@@ -58,8 +58,8 @@ xng atc status     # checks the sign-in`}
         the command that feeds them. It looks within 30 nm (<code>--radius-nm</code>). It keeps
         tower, approach, departure, ground, delivery, center and other voice channels, and leaves
         out ATIS, AWOS and VOLMET, which transmit all day. Closer and busier services count for
-        more. It then picks up to 8 channels from the slice of the band one capture covers (75% of
-        the sample rate, so 1.8 MHz at 2.4 MS/s).
+        more. It then picks up to 8 channels from the slice of the band one capture covers (about 75% of
+        the sample rate, so 1.75 MHz at 2.4 MS/s).
       </p>
 
       <h2>4. Start feeding</h2>
