@@ -119,16 +119,19 @@ xng listen --sdr driver=rtlsdr --mode airband -r 2400000 -c 121.15 --channels 12
           catalog what is within 30 nm of <code>--receiver-pos</code> (
           <code>--atc-nearby-radius-nm</code>), keeps tower, approach, departure, ground, delivery,
           center and other voice channels (never ATIS, AWOS or VOLMET, which talk all day), and
-          tunes the 1.8 MHz slice of the band that holds the most useful ones, up to 8 (
+          tunes the slice of the band (75% of the sample rate, so 1.8 MHz at{' '}
+          <code>-r 2400000</code>) that holds the most useful ones, up to 8 (
           <code>--atc-nearby-max</code>). Closer and busier services count for more. Each channel
           gets its catalog name as its label, and the picks are printed at start.{' '}
           <code>--atc-nearby-services TWR,GND,APP</code> limits the services, <code>-c</code> keeps
-          your center frequency, and <code>--labels</code> still renames a channel.{' '}
-          <code>xng atc nearby</code> shows the pick without tuning, plus the same setup as fixed{' '}
-          <code>--channels</code>.
+          your center frequency. Each pick already carries its catalog entry: <code>--labels</code>{' '}
+          only renames a channel, and <code>--atc-frequency</code> replaces the entry.{' '}
+          <code>xng atc nearby</code> shows the pick without tuning (from the same API as your sign-in,
+          or <code>--api</code>), plus the same setup as fixed <code>--channels</code>.
         </li>
         <li>
-          Each channel becomes a feed, linked to its entry in the Airframes ATC catalog. With{' '}
+          Each channel becomes a feed, linked to its entry in the Airframes ATC catalog. For channels
+          you list yourself, with{' '}
           <code>--receiver-pos</code> set, xng looks every channel up by frequency and position
           before connecting and feeds it under the entry it finds, with the entry&apos;s name as the
           label when the channel has none. When several entries share a frequency nearby, the
