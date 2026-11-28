@@ -39,7 +39,7 @@ export default function AtcFeeding() {
       <CodeBlock
         lang="bash"
         code={`# Debian / Ubuntu / Pi OS (pick the .deb for your machine from the releases page)
-sudo apt install ./xng-0.28.0-arm64.deb
+sudo apt install ./xng-0.29.0-arm64.deb
 xng devices        # the RTL-SDR should be listed`}
       />
 

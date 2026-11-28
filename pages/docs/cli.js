@@ -23,6 +23,7 @@ export default function Cli() {
             <tr><td><code>station</code></td><td>Run a whole station from a TOML config (many modes/SDRs in one process).</td></tr>
             <tr><td><code>status</code></td><td>Show a running station’s sessions and live decode status.</td></tr>
             <tr><td><code>atc</code></td><td>The Airframes ATC network: sign in (<code>login</code>, <code>logout</code>, <code>status</code>), see the channels near you (<code>nearby</code>) and their catalog entries (<code>match</code>), and plan a feed for your SDRs (<code>setup</code>).</td></tr>
+            <tr><td><code>airframes ingests</code></td><td>Ask the Airframes feed gateway which modes it takes, and show how each of your modes would be fed (gateway or per-port).</td></tr>
             <tr><td><code>devices</code></td><td>List available SDR devices (native Airspy + SoapySDR).</td></tr>
             <tr><td><code>iq-info</code></td><td>Inspect a recorded IQ file: duration, power, spectral peaks.</td></tr>
             <tr><td><code>ingest</code></td><td>Run the reference asf-2.0 ingest server (gRPC and/or QUIC).</td></tr>
@@ -55,6 +56,7 @@ export default function Cli() {
         <div className="deflist__row"><code>--filter-labels H1,Q0</code> · <code>--exclude-labels SQ</code><p>Keep or drop ACARS messages by label.</p></div>
         <div className="deflist__row"><code>--gs-file stations.json</code><p>VDL2 ground-station name lookup (hex AVLC address → name).</p></div>
         <div className="deflist__row"><code>--aircraft-db &lt;csv&gt;</code><p>tar1090 / Mictronics database for registration and type tagging. Also maps an ACARS registration back to its ICAO address, so ACARS positions can go out on SBS.</p></div>
+        <div className="deflist__row"><code>--airframes-transport quic</code><p>Send every Airframes feed the gateway takes over one connection to the feed gateway (<code>feed.airframes.io:5580</code>); the rest keep their per-port ingest. See <Link href="/docs/configuration">Configuration</Link>.</p></div>
         <div className="deflist__row"><code>--iridium-satmap</code><p>SGP4 satellite labeling for Iridium (fetches Iridium-NEXT TLEs from Celestrak, or give a TLE file). Also turns on receiver location from ring-alert Doppler; set <code>XNG_IRIDIUM_LOCATE=off</code> to skip it.</p></div>
       </div>
 
