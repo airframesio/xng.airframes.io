@@ -1,0 +1,170 @@
+import Link from 'next/link';
+import DocsLayout from '../../components/DocsLayout';
+import CodeBlock from '../../components/CodeBlock';
+import Callout from '../../components/Callout';
+
+export default function AtcFeeding() {
+  return (
+    <DocsLayout
+      slug="atc-feeding"
+      title="Feed ATC to Airframes"
+      lede="Put the tower, ground and approach channels near you on atc.airframes.io with one RTL-SDR and one command."
+    >
+      <p>
+        xng can feed live air traffic control audio to the{' '}
+        <a href="https://atc.airframes.io">Airframes ATC network</a>. It finds the channels near
+        your station in the Airframes ATC catalog, listens to all of them at once, and sends each
+        transmission as it happens. Listeners hear it labeled with the airport and service. Audio
+        only goes out while someone is talking.
+      </p>
+
+      <h2>What you need</h2>
+      <ul>
+        <li>An RTL-SDR (a V4 is fine) or another SoapySDR device, with an airband or discone antenna.</li>
+        <li>A Linux box, a Raspberry Pi (Pi OS Bookworm) or a Mac, online all the time.</li>
+        <li>
+          An Airframes account (free) and xng v0.27.0 or later. See{' '}
+          <Link href="/docs/install">Installation</Link>.
+        </li>
+        <li>Your station&apos;s position. Listeners only see it rounded to about 100 m.</li>
+      </ul>
+
+      <h2>1. Install and check the SDR</h2>
+      <CodeBlock
+        lang="bash"
+        code={`# Debian / Ubuntu / Pi OS (pick the .deb for your machine from the releases page)
+sudo apt install ./xng-0.27.0-arm64.deb
+xng devices        # the RTL-SDR should be listed`}
+      />
+
+      <h2>2. Sign in once</h2>
+      <CodeBlock
+        lang="bash"
+        code={`xng atc login      # prints a link and a code; approve it with your Airframes account
+xng atc status     # checks the sign-in`}
+      />
+      <p>
+        The sign-in is kept in <code>~/.config/xng/atc.json</code> for the user who ran it. Run it as
+        the same user that will run the feed.
+      </p>
+
+      <h2>3. See what xng would feed</h2>
+      <CodeBlock
+        lang="bash"
+        code={`xng atc nearby --lat 37.62 --lon -122.38`}
+      />
+      <p>
+        This lists the channels xng picks near you and the center frequency it tunes, then prints
+        the command that feeds them. It looks within 30 nm (<code>--radius-nm</code>). It keeps
+        tower, approach, departure, ground, delivery, center and other voice channels, and leaves
+        out ATIS, AWOS and VOLMET, which transmit all day. Closer and busier services count for
+        more. It then picks up to 8 channels from the slice of the band one capture covers (75% of
+        the sample rate, so 1.8 MHz at 2.4 MS/s).
+      </p>
+
+      <h2>4. Start feeding</h2>
+      <CodeBlock
+        lang="bash"
+        code={`xng listen --sdr driver=rtlsdr --mode airband -r 2400000 --channels auto \\
+    --receiver-pos 37.62,-122.38 --atc-feed --atc-station-name "My station"`}
+      />
+      <p>Within a few seconds the log shows each channel joining:</p>
+      <CodeBlock
+        lang="text"
+        code={`atc feed: KSFO TWR (120.500) accepted as fd_01m8g10msnv1719v8tmwpmeee0 (airport:KSFO:TWR:120500)
+atc feed: connected to atc-ingest.airframes.io:4433 over quic as you, feeding 3 stream(s) at 24 kbit/s`}
+      />
+      <p>
+        Then open <a href="https://atc.airframes.io">atc.airframes.io</a>, find your airport and
+        listen.
+      </p>
+
+      <h2>Adjusting the pick</h2>
+      <div className="deflist">
+        <div className="deflist__row"><code>--atc-nearby-radius-nm 50</code><p>Look further out. Use it in rural areas, or to reach a center sector.</p></div>
+        <div className="deflist__row"><code>--atc-nearby-max 4</code><p>Feed fewer channels. Each one costs some CPU, which matters on a Pi 3 or older.</p></div>
+        <div className="deflist__row"><code>--atc-nearby-services TWR,GND,APP</code><p>Only these services.</p></div>
+        <div className="deflist__row"><code>-c 121.15</code><p>Keep this center frequency, and only pick channels inside that capture.</p></div>
+        <div className="deflist__row"><code>--labels &quot;121.8=SFO Ground&quot;</code><p>Rename a channel. Its catalog entry stays the same.</p></div>
+        <div className="deflist__row"><code>--atc-frequency 121.8=airport:KSFO:GND:121800</code><p>Feed a channel under a different catalog entry.</p></div>
+      </div>
+      <p>
+        The pick is made when xng starts. Restart it to pick again, for example after the catalog
+        gains new channels near you.
+      </p>
+
+      <h2>Choosing channels yourself</h2>
+      <p>
+        List them with <code>--channels</code> and set the center with <code>-c</code>, between the
+        outer channels but not on one of them:
+      </p>
+      <CodeBlock
+        lang="bash"
+        code={`xng listen --sdr driver=rtlsdr --mode airband -r 2400000 -c 121.15 \\
+    --channels 120.5,121.8 --labels "121.8=SFO Ground" \\
+    --receiver-pos 37.62,-122.38 --atc-feed`}
+      />
+      <p>
+        With <code>--receiver-pos</code> set, xng looks each channel up in the catalog by frequency
+        and position. When two airports nearby share a frequency, the label decides between them
+        (&quot;SFO Ground&quot;, &quot;OAK Tower&quot;). If it is still unclear, the log lists the
+        candidates and that channel is not fed until you label it or set{' '}
+        <code>--atc-frequency</code>. Check first with{' '}
+        <code>xng atc match --lat 37.62 --lon -122.38 120.5 &quot;121.8=SFO Ground&quot;</code>.
+      </p>
+
+      <h2>Keep it running</h2>
+      <p>
+        On Linux, a systemd unit restarts the feed after a reboot or a crash. Save it as{' '}
+        <code>/etc/systemd/system/xng-atc.service</code>:
+      </p>
+      <CodeBlock
+        lang="ini"
+        code={`[Unit]
+Description=xng ATC feed
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=pi
+ExecStart=/usr/bin/xng listen --sdr driver=rtlsdr --mode airband -r 2400000 --channels auto --receiver-pos 37.62,-122.38 --atc-feed --atc-station-name "My station"
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target`}
+      />
+      <CodeBlock
+        lang="bash"
+        code={`sudo systemctl enable --now xng-atc
+journalctl -u xng-atc -f     # watch the log`}
+      />
+      <Callout type="note">
+        Run <code>xng atc login</code> as the unit&apos;s <code>User</code> first. The feed reads the
+        sign-in from that user&apos;s home folder.
+      </Callout>
+
+      <h2>Privacy</h2>
+      <ul>
+        <li>The station position is rounded to 100 m before it leaves your machine.</li>
+        <li>Add <code>--atc-hide-username</code> so your account name is not shown next to the feeds.</li>
+        <li>
+          Some channels may not be streamed in some countries. The catalog marks them and xng never
+          feeds them.
+        </li>
+      </ul>
+
+      <h2>If something is wrong</h2>
+      <div className="deflist">
+        <div className="deflist__row"><code>no ATC channels to feed</code><p>The catalog has nothing within the radius. Raise <code>--atc-nearby-radius-nm</code>, or list channels yourself.</p></div>
+        <div className="deflist__row"><code>not signed in</code><p>Run <code>xng atc login</code> as the user that runs xng, then check with <code>xng atc status</code>.</p></div>
+        <div className="deflist__row"><code>ambiguous</code><p>Two catalog entries share a frequency you listed. Label the channel with the airport and service, or set <code>--atc-frequency</code>.</p></div>
+        <div className="deflist__row"><code>Nothing on atc.airframes.io</code><p>Audio only flows while someone transmits. Check the antenna, the gain (<code>--gain</code>), and the squelch on the browser page (<code>--http 0.0.0.0:8080</code>, then open <code>/airband</code>).</p></div>
+      </div>
+      <p>
+        Everything else about airband (squelch, recordings, scanner, transcripts) is on{' '}
+        <Link href="/docs/airband">Airband voice &amp; ATC</Link>.
+      </p>
+    </DocsLayout>
+  );
+}

@@ -97,7 +97,11 @@ xng listen --sdr driver=rtlsdr --mode airband -r 2400000 -c 121.15 \\
       </div>
 
       <h2>Feeding the Airframes ATC network</h2>
-      <p>Sign in once, then add <code>--atc-feed</code>:</p>
+      <p>
+        Setting up a feed step by step is covered in{' '}
+        <Link href="/docs/atc-feeding">Feed ATC to Airframes</Link>. In short: sign in once, then add{' '}
+        <code>--atc-feed</code>:
+      </p>
       <CodeBlock
         lang="bash"
         code={`xng atc login            # shows a code; approve it in any browser
