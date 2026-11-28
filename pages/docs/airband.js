@@ -97,19 +97,45 @@ xng listen --sdr driver=rtlsdr --mode airband -r 2400000 -c 121.15 \\
       </div>
 
       <h2>Feeding the Airframes ATC network</h2>
-      <p>Sign in once, then add <code>--atc-feed</code>:</p>
+      <p>
+        Setting up a feed step by step is covered in{' '}
+        <Link href="/docs/atc-feeding">Feed ATC to Airframes</Link>. In short: sign in once, then add{' '}
+        <code>--atc-feed</code>:
+      </p>
       <CodeBlock
         lang="bash"
         code={`xng atc login            # shows a code; approve it in any browser
 xng atc login --email you@example.com    # or with a password
 xng atc status           # who this feeder is signed in as
 
+xng atc nearby --lat 37.62 --lon -122.38   # the ATC channels near you that fit one dongle
+
+xng listen --sdr driver=rtlsdr --mode airband -r 2400000 --channels auto \\
+    --receiver-pos 37.62,-122.38 --atc-feed
+
+# or choose the channels yourself
 xng listen --sdr driver=rtlsdr --mode airband -r 2400000 -c 121.15 --channels 120.5,121.8 \\
     --receiver-pos 37.62,-122.38 --atc-feed`}
       />
       <ul>
         <li>
-          Each channel becomes a feed, linked to its entry in the Airframes ATC catalog. With{' '}
+          <code>--channels auto</code> picks the channels for you. xng asks the Airframes ATC
+          catalog what is within 30 nm of <code>--receiver-pos</code> (
+          <code>--atc-nearby-radius-nm</code>), keeps tower, approach, departure, ground, delivery,
+          center and other voice channels (never ATIS, AWOS or VOLMET, which talk all day), and
+          tunes the slice of the band (about 75% of the sample rate, so 1.75 MHz at{' '}
+          <code>-r 2400000</code>) that holds the most useful ones, up to 8 (
+          <code>--atc-nearby-max</code>). Closer and busier services count for more. Each channel
+          gets its catalog name as its label, and the picks are printed at start.{' '}
+          <code>--atc-nearby-services TWR,GND,APP</code> limits the services, <code>-c</code> keeps
+          your center frequency. Each pick already carries its catalog entry: <code>--labels</code>{' '}
+          only renames a channel, and <code>--atc-frequency</code> replaces the entry.{' '}
+          <code>xng atc nearby</code> shows the pick without tuning (from the same API as your sign-in,
+          or <code>--api</code>), plus the same setup as fixed <code>--channels</code>.
+        </li>
+        <li>
+          Each channel becomes a feed, linked to its entry in the Airframes ATC catalog. For channels
+          you list yourself, with{' '}
           <code>--receiver-pos</code> set, xng looks every channel up by frequency and position
           before connecting and feeds it under the entry it finds, with the entry&apos;s name as the
           label when the channel has none. When several entries share a frequency nearby, the
