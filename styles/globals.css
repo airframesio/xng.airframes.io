@@ -1817,6 +1817,7 @@ html[data-theme='light'] .nav__theme .icon-moon {
 
 .deflist__row {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 0.3rem;
   padding: 1rem 1.1rem;
   border-top: 1px solid var(--line);
@@ -1829,6 +1830,8 @@ html[data-theme='light'] .nav__theme .icon-moon {
 
 .deflist__row > code,
 .deflist dt {
+  min-width: 0;
+  overflow-wrap: anywhere;
   font-family: var(--font-mono), monospace;
   font-size: 0.9rem;
   color: var(--amber-bright);
@@ -2228,5 +2231,13 @@ html[data-theme='light'] .nav__theme .icon-moon {
 
   .ticker__row {
     animation: none;
+  }
+}
+
+/* Long inline commands wrap instead of widening the page on phones. */
+@media (max-width: 640px) {
+  .prose :not(pre) > code {
+    white-space: normal;
+    overflow-wrap: anywhere;
   }
 }

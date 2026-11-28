@@ -109,6 +109,7 @@ xng atc login --email you@example.com    # or with a password
 xng atc status           # who this feeder is signed in as
 
 xng atc nearby --lat 37.62 --lon -122.38   # the ATC channels near you that fit one dongle
+xng atc setup --lat 37.62 --lon -122.38    # next release: plan every SDR, write a station file
 
 xng listen --sdr driver=rtlsdr --mode airband -r 2400000 --channels auto \\
     --receiver-pos 37.62,-122.38 --atc-feed
