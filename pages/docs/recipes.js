@@ -69,6 +69,22 @@ export default function Recipes() {
 xng listen --sdr driver=rtlsdr --mode meshcore -r 1000000 -c 910.525M \\
     --channels 910.525 --http 0.0.0.0:8080`} />
 
+      <h2>Check a VOR or an ILS from the ground</h2>
+      <p>
+        Each channel reports its radial (VOR) or course reading in DDM (localizer, glideslope)
+        every 10 seconds, with the ident and the station status: <code>no_ident</code> after a
+        minute of carrier with no keying, <code>test</code> when it keys TST. <code>--mode ils</code>{' '}
+        picks localizer or glideslope from the frequency. VOR and ILS are horizontally polarized,
+        so a horizontal dipole does much better than a vertical airband antenna.
+      </p>
+      <CodeBlock lang="bash" code={`# two VORs in one capture (any sample rate that is a multiple of 48 kHz)
+xng listen --sdr driver=rtlsdr --mode vor -r 960000 -c 113.000M \\
+    --channels 113.050,112.950 --http 0.0.0.0:8080
+
+# a localizer and the glideslope paired with it
+xng listen --sdr driver=rtlsdr --mode ils -r 960000 -c 110.200M --channels 110.100
+xng listen --sdr driver=rtlsdr --mode ils -r 240000 -c 334.350M --channels 334.400`} />
+
       <h2>AIS, both channels from one capture</h2>
       <CodeBlock lang="bash" code={`xng listen --sdr driver=rtlsdr --mode ais -r 2400000 -c 162.000M \\
     --channels 161.975,162.025 --nmea-tcp 0.0.0.0:10110`} />
