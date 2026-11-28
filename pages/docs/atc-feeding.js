@@ -117,7 +117,8 @@ xng station ~/.config/xng/atc-station.toml`}
           <strong>Coming in the next xng release.</strong> On v0.27.0, write the station file
           yourself: one <code>[[session]]</code> per SDR, each with its own <code>center</code> and
           channels. <code>xng atc nearby -c &lt;center&gt;</code> shows what fits around a center. The{' '}
-          <Link href="/docs/airband">airband page</Link> has a two-SDR example.
+          <a href="https://github.com/airframesio/xng/blob/master/contrib/station.airband.example.toml">example airband station file</a>{' '}
+          has two SDRs.
         </p>
       </Callout>
       <p>
