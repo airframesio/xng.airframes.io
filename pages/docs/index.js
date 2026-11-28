@@ -23,7 +23,7 @@ export default function DocsIntro() {
         xng collapses that whole zoo into <strong>one application</strong>. A single capture can
         feed many channels at once; every mode produces the same normalized message; and every
         output — console, JSON, Airframes, Prometheus, live maps — works identically across all of
-        them (mesh traffic is the one exception: it is not fed to Airframes). It is dual-licensed MIT or Apache-2.0, where most of the tools it replaces are GPL.
+        them (mesh traffic, VOR and ILS are the exceptions: they are not fed to Airframes). It is dual-licensed MIT or Apache-2.0, where most of the tools it replaces are GPL.
       </p>
 
       <Callout type="tip">

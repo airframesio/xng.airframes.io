@@ -73,11 +73,13 @@ xng listen --sdr driver=rtlsdr --mode meshcore -r 1000000 -c 910.525M \\
       <p>
         Each channel reports its radial (VOR) or course reading in DDM (localizer, glideslope)
         every 10 seconds, with the ident and the station status: <code>no_ident</code> after a
-        minute of carrier with no keying, <code>test</code> when it keys TST. <code>--mode ils</code>{' '}
+        minute of carrier with no keying, <code>test</code> when it keys TST. A glideslope sends
+        no ident (its localizer carries the ILS ident), so it never reports <code>no_ident</code>.{' '}
+        <code>--mode ils</code>{' '}
         picks localizer or glideslope from the frequency. VOR and ILS are horizontally polarized,
         so a horizontal dipole does much better than a vertical airband antenna.
       </p>
-      <CodeBlock lang="bash" code={`# two VORs in one capture (any sample rate that is a multiple of 48 kHz)
+      <CodeBlock lang="bash" code={`# two VORs in one capture (a sample rate that is a multiple of 48 kHz and that the SDR supports)
 xng listen --sdr driver=rtlsdr --mode vor -r 960000 -c 113.000M \\
     --channels 113.050,112.950 --http 0.0.0.0:8080
 
