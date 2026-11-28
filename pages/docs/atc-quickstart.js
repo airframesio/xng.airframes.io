@@ -27,12 +27,12 @@ export default function AtcQuickstart() {
 
       <h2>1. Install xng and check your SDRs</h2>
       <p>
-        Get xng v0.27.0 or later from <Link href="/docs/install">Installation</Link>, then list the
+        Get xng v0.28.0 or later from <Link href="/docs/install">Installation</Link>, then list the
         dongles it can see:
       </p>
       <CodeBlock
         lang="bash"
-        code={`sudo apt install ./xng-0.27.0-arm64.deb   # Debian / Ubuntu / Pi OS
+        code={`sudo apt install ./xng-0.28.0-arm64.deb   # Debian / Ubuntu / Pi OS
 xng devices                                # every SDR should be listed`}
       />
       <Callout type="warn">
@@ -51,13 +51,6 @@ xng atc status     # checks the sign-in`}
       />
 
       <h2>3. Let xng plan the feed</h2>
-      <Callout type="note">
-        <p>
-          <strong>Coming in the next xng release.</strong> <code>xng atc setup</code> is not in
-          v0.27.0 yet. With one SDR on v0.27.0, use the{' '}
-          <a href="#one-sdr-today">one-command feed</a> below.
-        </p>
-      </Callout>
       <CodeBlock
         lang="bash"
         code={`xng atc setup --lat 38.68 --lon -120.98 --station-name "Cameron Park"`}
@@ -148,7 +141,7 @@ WantedBy=multi-user.target`}
 journalctl -u xng-atc -f     # watch the log`}
       />
 
-      <h2 id="one-sdr-today">One SDR on xng v0.27.0</h2>
+      <h2 id="one-sdr-today">One SDR without a station file</h2>
       <p>
         With a single dongle you don&apos;t need a station file. <code>--channels auto</code> makes
         the same pick for one SDR every time xng starts:

@@ -29,7 +29,7 @@ export default function AtcFeeding() {
         <li>An RTL-SDR (a V4 is fine) or another SoapySDR device, with an airband or discone antenna.</li>
         <li>A Linux box, a Raspberry Pi (Pi OS Bookworm) or a Mac, online all the time.</li>
         <li>
-          An Airframes account (free) and xng v0.27.0 or later. See{' '}
+          An Airframes account (free) and xng v0.28.0 or later. See{' '}
           <Link href="/docs/install">Installation</Link>.
         </li>
         <li>Your station&apos;s position. Listeners only see it rounded to about 100 m.</li>
@@ -39,7 +39,7 @@ export default function AtcFeeding() {
       <CodeBlock
         lang="bash"
         code={`# Debian / Ubuntu / Pi OS (pick the .deb for your machine from the releases page)
-sudo apt install ./xng-0.27.0-arm64.deb
+sudo apt install ./xng-0.28.0-arm64.deb
 xng devices        # the RTL-SDR should be listed`}
       />
 
@@ -112,15 +112,13 @@ atc feed: connected to atc-ingest.airframes.io:4433 over quic as you, feeding 3 
         code={`xng atc setup --lat 37.62 --lon -122.38 --station-name "My station"
 xng station ~/.config/xng/atc-station.toml`}
       />
-      <Callout type="note">
-        <p>
-          <strong>Coming in the next xng release.</strong> On v0.27.0, write the station file
-          yourself: one <code>[[session]]</code> per SDR, each with its own <code>center</code> and
-          channels. <code>xng atc nearby -c &lt;center&gt;</code> shows what fits around a center. The{' '}
-          <a href="https://github.com/airframesio/xng/blob/master/contrib/station.airband.example.toml">example airband station file</a>{' '}
-          has two SDRs.
-        </p>
-      </Callout>
+      <p>
+        To write the station file yourself, use one <code>[[session]]</code> per SDR, each with its
+        own <code>center</code> and channels. <code>xng atc nearby -c &lt;center&gt;</code> shows what
+        fits around a center. The{' '}
+        <a href="https://github.com/airframesio/xng/blob/master/contrib/station.airband.example.toml">example airband station file</a>{' '}
+        has two SDRs.
+      </p>
       <p>
         The <Link href="/docs/atc-quickstart">quick start</Link> lists the setup options, and has the
         sample rate and USB advice that matters once several dongles share a computer. In short:
@@ -202,18 +200,16 @@ journalctl -u xng-atc -f     # watch the log`}
         <code>~/.config/xng/atc.json</code>. Keep that file when you move to a new SD card or
         computer, and the feeds stay on the same station.
       </p>
-      <Callout type="note">
-        <p>
-          <strong>Coming in the next xng release:</strong> xng also sends a station UUID, so the
-          station stays linked even after a reinstall gives the feeder a new sign-in. It is saved for
-          you on first use, and it starts as the UUID Airframes already uses for your station, so
-          nothing changes for existing feeders. To pin it yourself, set{' '}
-          <code>--atc-station-uuid &lt;uuid&gt;</code>, <code>XNG_ATC_STATION_UUID</code>, or{' '}
-          <code>station-uuid</code> under <code>[outputs.airband.atc]</code>. Decoder feeds get the
-          same, with <code>station-uuid</code> at the top of the station file or{' '}
-          <code>XNG_STATION_UUID</code>.
-        </p>
-      </Callout>
+      <p>
+        Since v0.28.0, xng also sends a station UUID, so the
+        station stays linked even after a reinstall gives the feeder a new sign-in. It is saved for
+        you on first use, and it starts as the UUID Airframes already uses for your station, so
+        nothing changes for existing feeders. To pin it yourself, set{' '}
+        <code>--atc-station-uuid &lt;uuid&gt;</code>, <code>XNG_ATC_STATION_UUID</code>, or{' '}
+        <code>station-uuid</code> under <code>[outputs.airband.atc]</code>. Decoder feeds get the
+        same, with <code>station-uuid</code> at the top of the station file or{' '}
+        <code>XNG_STATION_UUID</code>.
+      </p>
 
       <h2>Privacy</h2>
       <ul>
