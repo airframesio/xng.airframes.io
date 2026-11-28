@@ -121,6 +121,29 @@ auto-suffix = true         # → XX-KSEA-ACARS / -VDL2 / -HFDL / -AIS
 enabled = false            # decode HFDL locally, but do not feed it`}
       />
 
+      <h2>One connection to Airframes (QUIC)</h2>
+      <p>
+        New in 0.29.0: <code>transport = "quic"</code> in <code>[outputs.airframes]</code> (or{' '}
+        <code>--airframes-transport quic</code>) sends every feed as its own stream on one QUIC
+        connection to the Airframes feed gateway, <code>feed.airframes.io:5580</code>. It falls
+        back to TLS over TCP on the same port when UDP is blocked. The gateway sees each feed's
+        health and last message, and measures the link's round trip.
+      </p>
+      <p>
+        When xng connects, the gateway lists the modes it takes. xng then sends every listed
+        mode, including modes with no per-port ingest such as STD-C, so new modes start flowing
+        as Airframes adds them, with no xng update. Until the gateway accepts a feed, and
+        whenever the connection is down, messages go to the per-port ingests as before, so
+        turning it on loses nothing. <code>xng airframes ingests</code> shows the list.
+      </p>
+      <CodeBlock
+        lang="toml"
+        code={`[outputs.airframes]
+enabled = true
+station-id = "XX-KSEA"
+transport = "quic"         # or "quic-only" / "tls" to pin one transport`}
+      />
+
       <h2>[[session]]</h2>
       <p>Repeat one block per decode job. A session reads from an SDR <em>or</em> a recorded file.</p>
       <div className="deflist">

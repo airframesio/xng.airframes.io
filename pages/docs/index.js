@@ -84,7 +84,7 @@ export default function DocsIntro() {
 
       <h2>Project status</h2>
       <p>
-        xng is at <strong>v0.28.0</strong> — pre-1.0 but actively developed and already feeding
+        xng is at <strong>v0.29.0</strong> — pre-1.0 but actively developed and already feeding
         production Airframes from live stations. The VHF ACARS chain is validated end-to-end;
         VDL2, HFDL, AIS, Mode S/ADS-B, STD-C, Aero, Iridium and several others are validated
         against real off-air recordings and fenced by CI regression gates. A handful of newer
