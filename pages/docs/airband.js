@@ -109,10 +109,14 @@ xng listen --sdr driver=rtlsdr --mode airband -r 2400000 -c 121.15 --channels 12
       />
       <ul>
         <li>
-          Each channel becomes a feed. Give it the network&apos;s frequency key with{' '}
-          <code>--atc-frequency 120.5=airport:KSFO:TWR:120500</code>, or set{' '}
-          <code>--receiver-pos</code> and the network matches the frequency to the nearest facility.
-          If it can&apos;t, the log lists the candidate keys.
+          Each channel becomes a feed, linked to its entry in the Airframes ATC catalog. With{' '}
+          <code>--receiver-pos</code> set, xng looks every channel up by frequency and position
+          before connecting and feeds it under the entry it finds, with the entry&apos;s name as the
+          label when the channel has none. When several entries share a frequency nearby, the
+          channel label settles it (<code>SJC Ground</code> picks the San Jose ground entry); if
+          nothing does, the log lists the candidates and that channel is not fed. Fix one by hand
+          with <code>--atc-frequency 120.5=airport:KSFO:TWR:120500</code>, or check first with{' '}
+          <code>xng atc match --lat 37.62 --lon -122.38 120.5 121.8</code>.
         </li>
         <li>
           Audio is squelch-gated Opus (16 kHz, 24 kbit/s by default, <code>--atc-bitrate</code>), so
@@ -251,8 +255,8 @@ hang-ms = 300
 
 [[session.airband.channel]]
 freq = "120.500"
-label = "SFO Tower"
-atc-frequency = "airport:KSFO:TWR:120500"
+label = "SFO Tower"           # found in the ATC catalog by frequency and receiver-pos
+# atc-frequency = "airport:KSFO:TWR:120500"   # or name the entry yourself
 
 [[session.airband.channel]]
 freq = "120.900"
