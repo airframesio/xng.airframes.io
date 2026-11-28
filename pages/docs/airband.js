@@ -104,10 +104,29 @@ xng listen --sdr driver=rtlsdr --mode airband -r 2400000 -c 121.15 \\
 xng atc login --email you@example.com    # or with a password
 xng atc status           # who this feeder is signed in as
 
+xng atc nearby --lat 37.62 --lon -122.38   # the ATC channels near you that fit one dongle
+
+xng listen --sdr driver=rtlsdr --mode airband -r 2400000 --channels auto \\
+    --receiver-pos 37.62,-122.38 --atc-feed
+
+# or choose the channels yourself
 xng listen --sdr driver=rtlsdr --mode airband -r 2400000 -c 121.15 --channels 120.5,121.8 \\
     --receiver-pos 37.62,-122.38 --atc-feed`}
       />
       <ul>
+        <li>
+          <code>--channels auto</code> picks the channels for you. xng asks the Airframes ATC
+          catalog what is within 30 nm of <code>--receiver-pos</code> (
+          <code>--atc-nearby-radius-nm</code>), keeps tower, approach, departure, ground, delivery,
+          center and other voice channels (never ATIS, AWOS or VOLMET, which talk all day), and
+          tunes the 1.8 MHz slice of the band that holds the most useful ones, up to 8 (
+          <code>--atc-nearby-max</code>). Closer and busier services count for more. Each channel
+          gets its catalog name as its label, and the picks are printed at start.{' '}
+          <code>--atc-nearby-services TWR,GND,APP</code> limits the services, <code>-c</code> keeps
+          your center frequency, and <code>--labels</code> still renames a channel.{' '}
+          <code>xng atc nearby</code> shows the pick without tuning, plus the same setup as fixed{' '}
+          <code>--channels</code>.
+        </li>
         <li>
           Each channel becomes a feed, linked to its entry in the Airframes ATC catalog. With{' '}
           <code>--receiver-pos</code> set, xng looks every channel up by frequency and position
