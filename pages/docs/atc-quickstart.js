@@ -32,7 +32,7 @@ export default function AtcQuickstart() {
       </p>
       <CodeBlock
         lang="bash"
-        code={`sudo apt install ./xng-0.28.0-arm64.deb   # Debian / Ubuntu / Pi OS
+        code={`sudo apt install ./xng-0.28.0-arm64.deb   # 64-bit Pi OS; pick the amd64 or armhf .deb to match your machine
 xng devices                                # every SDR should be listed`}
       />
       <Callout type="warn">
@@ -117,7 +117,9 @@ atc feed: connected to atc-ingest.airframes.io:4433 over quic as you, feeding 16
       <h2>5. Keep it running</h2>
       <p>
         On Linux, save this as <code>/etc/systemd/system/xng-atc.service</code>, with your user name
-        in place of <code>pi</code>:
+        in place of <code>pi</code>. The .deb installs xng at <code>/usr/bin/xng</code>. After a
+        tarball install, use the path <code>command -v xng</code> prints, usually{' '}
+        <code>/usr/local/bin/xng</code>:
       </p>
       <CodeBlock
         lang="ini"

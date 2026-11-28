@@ -114,7 +114,7 @@ xng station ~/.config/xng/atc-station.toml`}
       />
       <p>
         To write the station file yourself, use one <code>[[session]]</code> per SDR, each with its
-        own <code>center</code> and channels. <code>xng atc nearby -c &lt;center&gt;</code> shows what
+        own <code>center</code> and channels. <code>xng atc nearby --lat &lt;lat&gt; --lon &lt;lon&gt; -c &lt;center&gt;</code> shows what
         fits around a center. The{' '}
         <a href="https://github.com/airframesio/xng/blob/master/contrib/station.airband.example.toml">example airband station file</a>{' '}
         has two SDRs.
@@ -209,6 +209,13 @@ journalctl -u xng-atc -f     # watch the log`}
         <code>station-uuid</code> under <code>[outputs.airband.atc]</code>. Decoder feeds get the
         same, with <code>station-uuid</code> at the top of the station file or{' '}
         <code>XNG_STATION_UUID</code>.
+      </p>
+      <p>
+        The UUIDs are saved in <code>station-uuids.json</code>, in <code>XNG_STATE_DIR</code> or
+        else <code>~/.config/xng</code>. Keep it with <code>atc.json</code>. A feeder that loses
+        both starts over with a new station UUID; set the old one with{' '}
+        <code>--atc-station-uuid</code>, <code>XNG_ATC_STATION_UUID</code> or{' '}
+        <code>station-uuid</code> to get the station back.
       </p>
 
       <h2>Privacy</h2>
