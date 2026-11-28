@@ -61,6 +61,10 @@ export default function DocsIntro() {
           <p>Discover your radio, find receivable signals, and watch them decode live.</p>
         </div>
         <div className="deflist__row">
+          <Link href="/docs/atc-quickstart"><code>ATC feeder quick start</code></Link>
+          <p>Feed the ATC channels near you to atc.airframes.io with the SDRs you have.</p>
+        </div>
+        <div className="deflist__row">
           <Link href="/docs/configuration"><code>Configuration</code></Link>
           <p>The station TOML file: sessions, outputs, and per-mode Airframes feeding.</p>
         </div>
@@ -80,7 +84,7 @@ export default function DocsIntro() {
 
       <h2>Project status</h2>
       <p>
-        xng is at <strong>v0.25.0</strong> — pre-1.0 but actively developed and already feeding
+        xng is at <strong>v0.28.0</strong> — pre-1.0 but actively developed and already feeding
         production Airframes from live stations. The VHF ACARS chain is validated end-to-end;
         VDL2, HFDL, AIS, Mode S/ADS-B, STD-C, Aero, Iridium and several others are validated
         against real off-air recordings and fenced by CI regression gates. A handful of newer
